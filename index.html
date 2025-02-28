@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashem Alkadri | Portfolio</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        h1 { color: #333; }
+        a { text-decoration: none; color: #007bff; }
+        .repo-list { list-style: none; padding: 0; }
+        .repo-item { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Hashem Alkadri</h1>
+    <p><a href="https://github.com/maybehardcode" target="_blank">GitHub</a> | <a href="https://www.linkedin.com/in/thehashemalkadri" target="_blank">LinkedIn</a></p>
+    
+    <h2>Public Repositories</h2>
+    <ul id="repo-list" class="repo-list"></ul>
+    
+    <script>
+        const username = "maybehardcode";
+        const repoList = document.getElementById("repo-list");
+        
+        fetch(`https://api.github.com/users/${username}/repos`)
+            .then(response => response.json())
+            .then(data => {
+                const kattisRepo = data.find(repo => repo.name === "KattisProblems");
+                if (kattisRepo) {
+                    const li = document.createElement("li");
+                    li.className = "repo-item";
+                    li.innerHTML = `<a href="${kattisRepo.html_url}" target="_blank">${kattisRepo.name}</a>`;
+                    repoList.appendChild(li);
+                }
+            })
+            .catch(error => console.error("Error fetching repos:", error));
+    </script>
+</body>
+</html>
